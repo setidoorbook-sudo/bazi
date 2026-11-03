@@ -1,0 +1,59 @@
+import random
+play_again = "y"
+while play_again == "y" or play_again == "Y" or play_again == "بله": secret = random.randint(1, 100) attempt = 1 max_attempts = 5 won = False
+print("\n--- بازی حدس اعداد (بین 1 تا 100) ---")
+
+while attempt <= max_attempts:
+    print(f"\nتلاش {attempt} از {max_attempts}")
+    print(f"جان باقی‌مانده: {max_attempts - attempt + 1}")
+
+    user_input = input("حدس خود را وارد کنید: ")
+
+    if not user_input.isdigit():
+        print("ورودی نامعتبر! لطفا فقط عدد صحیح مثبت وارد کنید.")
+        continue
+
+    guess = int(user_input)
+
+    if guess < 1 or guess > 100:
+        print("عدد وارد شده باید در بازه 1 تا 100 باشد!")
+        continue
+
+    if guess == secret:
+        print("\nتبریک! عدد را درست حدس زدید.")
+        if attempt == 1:
+            print("رتبه شما: نمونه ای")
+        elif attempt == 2:
+            print("رتبه شما: بسیار خوبی")
+        elif attempt == 3:
+            print("رتبه شما: خوب")
+        elif attempt == 4:
+            print("رتبه شما: قبول")
+        elif attempt == 5:
+            print("رتبه شما: با شانس بردی!")
+        won = True
+        break
+    else:
+        if guess > secret:
+            direction = "کوچک‌تر وارد کن"
+            diff = guess - secret
+        else:
+            direction = "بزرگ‌تر وارد کن"
+            diff = secret - guess
+
+        if diff <= 5:
+            distance = "خیلی نزدیکی!"
+        elif diff <= 15:
+            distance = "نزدیکی، ولی هنوز فاصله داری!"
+        else:
+            distance = "خیلی دوری!"
+
+        print(f"راهنما: {direction} ({distance})")
+        attempt += 1
+
+if not won:
+    print("\nمتاسفانه باختید! فرصت‌های شما تمام شد.")
+    print(f"عدد مخفی {secret} بود.")
+
+play_again = input("\nآیا می‌خواهید دوباره بازی کنید؟ (بله / خیر یا y / n): ")
+print("پایان بازی. خدانگهدار!")
